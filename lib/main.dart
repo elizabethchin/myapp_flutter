@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Startup Name Generator',
       theme: ThemeData(          // Add the 3 lines from here... 
-        primaryColor: Colors.purple[200],
+        primaryColor: Colors.green[200],
       ),
       home: RandomWords(),
     );
@@ -43,6 +43,7 @@ class _RandomWordsState extends State<RandomWords> {
             _suggestions.addAll(generateWordPairs().take(10)); /*4*/
           }
           return _buildRow(_suggestions[index]);
+          
         });
   }
   // #enddocregion _buildSuggestions
@@ -55,7 +56,8 @@ class _RandomWordsState extends State<RandomWords> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: Icon(
+      
+      leading: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),
