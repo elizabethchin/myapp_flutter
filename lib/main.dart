@@ -29,6 +29,8 @@ class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _saved = <WordPair>{};
   final _biggerFont = TextStyle(fontSize: 18.0);
+  String result = "";
+  String blank = "";
   // #enddocregion RWS-var
 
   // #docregion _buildSuggestions
@@ -51,10 +53,12 @@ class _RandomWordsState extends State<RandomWords> {
   // #docregion _buildRow
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
+    final twoStartUps = "${pair.asCamelCase} - ${pair.asLowerCase}";
+
     return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
+      title: Text( 
+        twoStartUps,
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
       
       leading: Icon(
@@ -65,12 +69,16 @@ class _RandomWordsState extends State<RandomWords> {
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
+            result = "";
           } else {
             _saved.add(pair);
+            result = "Favorited!";
           }
         });
       },
-    );
+      subtitle: new Text(
+        alreadySaved ? result : blank),
+      );
   }
   // #enddocregion _buildRow
 
