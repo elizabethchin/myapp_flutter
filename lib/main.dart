@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator',
-      theme: ThemeData(          // Add the 3 lines from here... 
+      theme: ThemeData(
+        // Add the 3 lines from here...
         primaryColor: Colors.green[200],
       ),
       home: RandomWords(),
@@ -45,7 +46,6 @@ class _RandomWordsState extends State<RandomWords> {
             _suggestions.addAll(generateWordPairs().take(10)); /*4*/
           }
           return _buildRow(_suggestions[index]);
-          
         });
   }
   // #enddocregion _buildSuggestions
@@ -53,19 +53,33 @@ class _RandomWordsState extends State<RandomWords> {
   // #docregion _buildRow
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
-    final twoStartUps = "${pair.asCamelCase} - ${pair.asLowerCase}";
+    final twoStartUps = "${pair.asUpperCase} - ${pair.asCamelCase}";
 
-    return ListTile(
-      title: Text( 
-        twoStartUps,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      
-      leading: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.red : null,
-      ),
-      onTap: () {
+    return Card(
+      child: InkWell(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          textDirection: TextDirection.ltr,
+          children: [
+            Icon(
+              alreadySaved ? Icons.favorite : Icons.favorite_border,
+              color: alreadySaved ? Colors.red : null,
+            ),
+            Text(
+              pair.asPascalCase,
+              style: TextStyle(color: Colors.purple, fontSize: 20.0),
+            ),
+            Text(
+              ' - ',
+              style: TextStyle(color: Colors.blue, fontSize: 20.0),
+            ),
+            Text(
+              pair.asPascalCase,
+              style: TextStyle(color: Colors.orange, fontSize: 20.0),
+            ),
+          ],
+        ),
+        onTap: () {
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
@@ -76,9 +90,8 @@ class _RandomWordsState extends State<RandomWords> {
           }
         });
       },
-      subtitle: new Text(
-        alreadySaved ? result : blank),
-      );
+      ),
+    );
   }
   // #enddocregion _buildRow
 
